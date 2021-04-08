@@ -109,18 +109,20 @@ public class Application {
                                 "", // 6-location
                                 "" // 7-profile
                         };
-                        // name username github-link
+                        // name
                         Optional.ofNullable(user)
                                 .map(u -> u.getElementsByClass("mr-1"))
                                 .map(nameElements -> nameElements.first())
-                                .ifPresent(nameElement -> {
-                                    // name
-                                    logParams[2] = nameElement.text();
+                                .ifPresent(nameElement -> logParams[2] = nameElement.text());
+                        // username github-link
+                        Optional.ofNullable(user)
+                                .map(u -> u.getElementsByClass("color-text-secondary"))
+                                .map(nameElements -> nameElements.first())
+                                .ifPresent(element -> {
                                     // username
-                                    Optional.ofNullable(nameElement.nextElementSibling())
-                                            .ifPresent(usernameElement -> logParams[3] = nameElement.text());
+                                    logParams[3] = element.text();
                                     // github-link
-                                    logParams[4] = "https://github.com" + nameElement.attr("href");
+                                    logParams[4] = "https://github.com" + element.attr("href");
                                 });
                         // email
                         Optional.ofNullable(user)
