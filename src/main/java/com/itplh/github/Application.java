@@ -92,9 +92,8 @@ public class Application {
     private static void selectUserByPage(long pageNum) {
         Document document = getDocument(pageNum);
         Optional.ofNullable(document)
-                .map(doc -> doc.getElementsByClass("user-list"))
-                .map(userListElements -> userListElements.first())
-                .map(userListElement -> userListElement.children())
+                .map(doc -> doc.getElementById("user_search_results").child(0))
+                .map(userListParentElement -> userListParentElement.children())
                 .ifPresent(userList -> {
                     for (int i = 0; i < userList.size(); i++) {
                         Element user = userList.get(i);
