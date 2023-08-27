@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 class GithubLocationUserSearchTest {
 
     @Test
-    void multithreadingQueryUserByPageRange() throws InterruptedException {
+    void multithreadingQueryUserByPageRange() {
         GithubLocationUserSearch.getInstance()
                 .setTargetUser("tanpenggood")
                 .setLocation("chongqing")
