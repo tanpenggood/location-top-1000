@@ -7,7 +7,9 @@ import com.itplh.github.domain.SearchResult;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -114,23 +116,26 @@ public class GithubLocationUserSearch {
                         String username = user.getHl_login();
                         String githubLink = "https://github.com/" + user.getHl_login();
                         String location = user.getLocation();
+                        int repositories = user.getRepos();
                         int followers = user.getFollowers();
                         String profile = user.getHl_profile_bio();
-                        final String[] logParams = {
-                                pageNum + "", // pageNum
-                                no + "", // No
-                                name, // name
-                                username, // username
-                                followers + "", // followers
-                                githubLink, // github-link
-                                "", // email
-                                location, // location
-                                profile // profile
-                        };
+                        Map userInfoMap = new LinkedHashMap() {{
+                            put("page", pageNum);
+                            put("No", no);
+                            put("name", name);
+                            put("username", username);
+                            put("location", location);
+                            put("repositories", repositories);
+                            put("followers", followers);
+                            put("github-link", githubLink);
+                            put("email", "");
+                            put("profile", profile);
+                        }};
 
-                        String info = String.format("page.%s No.%s name[%s] username[%s] followers[%s] link[%s] email[%s] location[%s] profile[%s]", logParams);
-                        if (Objects.equals(logParams[2], this.targetName)
-                                || Objects.equals(logParams[3], this.targetName)) {
+                        StringBuilder infoBuilder = new StringBuilder();
+                        userInfoMap.forEach((k, v) -> infoBuilder.append(k).append("[").append(v).append("] "));
+                        String info = infoBuilder.toString();
+                        if (Objects.equals(this.targetName, name) || Objects.equals(this.targetName, username)) {
                             log.info("\r\n------------------------------------------------------------\r\n{}\r\n------------------------------------------------------------", info);
                             stop = true;
                         } else {
