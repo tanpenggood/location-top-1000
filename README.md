@@ -2,6 +2,9 @@
 
 search github `location:<city name> <username>` ranking.
 
+- `GithubLocationUserSearch` parse by json 【**Recommend**】
+- `GithubLocationUserSearchByHTML` parse by HTML 【**Unrecommend**】
+
 ## Usage
 
 - Multithreading Query
